@@ -34,39 +34,59 @@ function playRound(playerSelection, computerSelection) {
 
 
 
-function game() {
-    let playerScore = 0;
-    let computerScore = 0;
+const buttons = document.querySelectorAll("button");
+const results = document.querySelector("#results");
+const score = document.querySelector("#score");
+let playerScore = 0;
+let computerScore = 0;
 
-    for(let i = 0; i < 5; i++) {
+buttons.forEach(button => {
+
+    button.addEventListener("click", () => {
 
         if(computerScore < 3 && playerScore < 3) {
-            let round = playRound(prompt("Enter either rock, paper, or scissors."), computerPlay());
+            let round = playRound(button.textContent, computerPlay());
             if(round.startsWith("You win!")) {
-                console.log("You won this round.");
+                results.textContent = "You win!";
                 console.log(playerScore);
                 playerScore++;
                 console.log(playerScore);
             } else if(round.startsWith("You lose.")) {
-                console.log("You lost this round.");
+                results.textContent = "You lose.";
                 console.log(computerScore);
                 computerScore++;
                 console.log(computerScore);
             } else {
-                console.log("It's a tie!");
-                i--;
+                results.textContent = "It's a tie!"
             }
         }
+        score.textContent = `Player Score: ${playerScore}
+        Computer Score: ${computerScore}`
         
-    }
 
-    if(playerScore >= 3) {
-        console.log("You have won.");
-        return "You have won."
-    } else {
-        console.log("You have lost.");
-        return "You have lost."
-    }
-}
+        if(playerScore >= 3) {
+            results.textContent = "You won the whole game!";
+            playerScore = 0;
+            computerScore = 0;
+            return "You have won."
+        } else if(computerScore >= 3) {
+            results.textContent = "You have lost it all...";
+            computerScore = 0;
+            playerScore = 0;
+            return "You have lost."
+        }
 
-game();
+        
+    });
+});
+
+
+
+
+
+
+// function game() {
+//     
+// }
+
+// game();
